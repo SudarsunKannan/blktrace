@@ -42,6 +42,9 @@
 #define BIT_END(iop)	((iop)->t.sector + ((iop)->t.bytes >> 9))
 #define IOP_READ(iop)	((iop)->t.action & BLK_TC_ACT(BLK_TC_READ))
 #define IOP_RW(iop)	(IOP_READ(iop) ? 1 : 0)
+/*Sudarsun changes*/
+#define IOP_WRITE(iop)   ((iop)->t.action & BLK_TC_ACT(BLK_TC_WRITE))
+#define IOP_DISCARD(io)  ((iop)->t.action & BLK_TC_ACT(BLK_TC_DISCARD))
 
 #define TO_SEC(nanosec)	((double)(nanosec) / 1.0e9)
 #define TO_MSEC(nanosec) (1000.0 * TO_SEC(nanosec))

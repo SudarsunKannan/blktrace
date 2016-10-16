@@ -109,6 +109,29 @@ int process(void)
 	genesis = last_vtrace = time(NULL);
 	gettimeofday(&tvs, NULL);
 	while (!done && next_trace(&iop->t, &iop->pdu)) {
+
+    /*Sudarsun - paper changes for read,write,discard d2c
+    TODO: Add to command line parameters*/
+#if defined(_WRITE_ONLY)
+    if(!IOP_WRITE(iop)) {
+        iop = io_alloc();
+        continue;
+    }
+#endif  
+
+#if defined(_DISCARD_ONLY)
+    if(!IOP_DISCARD(iop)) {
+        iop = io_alloc();
+        continue;
+    }
+#endif  
+
+#if defined(_READ_ONLY)
+    if(!IOP_READ(iop)) {
+        iop = io_alloc();
+        continue;
+    }
+#endif  
 		add_trace(iop);
 		iop = io_alloc();
 	}
